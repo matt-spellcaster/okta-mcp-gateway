@@ -158,12 +158,16 @@ def main() -> int:
     if not a.client_id:
         ap.error("gateway client ID not found; pass --client-id or set OKTA_CLIENT_ID in env")
 
-    events = json.loads(a.system_log.read_text()).get("items", [])
+    body = json.loads(a.system_log.read_text())
+    events = body.get("items", [])
     if not events:
         print("reconcile: the System Log file has no events", file=sys.stderr)
         return 1
-    start = min(parse_ts(e["published"]) for e in events)
-    end = max(parse_ts(e["published"]) for e in events)
+    window = body.get("window") or {}
+    # The window the log was fetched for, so an audited call after the last event
+    # is still judged. Falls back to the span of the events themselves.
+    start = parse_ts(window["since"]) if window.get("since") else min(parse_ts(e["published"]) for e in events)
+    end = parse_ts(window["until"]) if window.get("until") else max(parse_ts(e["published"]) for e in events)
 
     audit_paths = a.audit or sorted((ROOT / "logs").glob("audit-*.jsonl"))
     findings = []

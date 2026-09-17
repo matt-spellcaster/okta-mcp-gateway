@@ -1,0 +1,316 @@
+{
+  "window": {
+    "since": "2026-03-04T09:00:00Z",
+    "until": "2026-03-04T09:30:00Z"
+  },
+  "items": [
+    {
+      "uuid": "9799265cb728164b4568c47ca6d704ae3cbe2310",
+      "published": "2026-03-04T09:14:01.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "10844ab072e268437b1d06c532f5e4ba",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "dd3ffc45c68a9e2549b2f685b5563cf6e6b9870a",
+      "published": "2026-03-04T09:14:19.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "786c5e76287afe2133d59832c729d364",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "0f75bdf8e91d0b327461e1bf575aabef0d216668",
+      "published": "2026-03-04T09:14:23.400Z",
+      "eventType": "group.user_membership.add",
+      "displayMessage": "group user_membership add",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "00uDEMOdana000000000",
+          "alternateId": "dana.okoye@acme.example",
+          "displayName": "dana.okoye",
+          "type": "User"
+        },
+        {
+          "id": "00gDEMOsupport000000",
+          "alternateId": "unknown",
+          "displayName": "support-tier1",
+          "type": "UserGroup"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "588c73199a1cff35eb385cfcd9a39049",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "1a33b5c045aacde0cab0a8f7de69e20da2f838d4",
+      "published": "2026-03-04T09:15:04.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "43d0faa7809a54f9543523ccda2d27d6",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "0375456f1064e78a75fe4bce41fe48841bbdadf8",
+      "published": "2026-03-04T09:16:39.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "725ad40f73c63f6c0d4861ed849af72e",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "4ebbc46acb2a9140aa16ecda045f8e14c24d35d0",
+      "published": "2026-03-04T09:21:02.000Z",
+      "eventType": "user.session.start",
+      "displayMessage": "user session start",
+      "severity": "INFO",
+      "actor": {
+        "id": "00uDEMOadmin00000000",
+        "displayName": "Robin Reyes",
+        "alternateId": "robin.reyes@acme.example",
+        "type": "User"
+      },
+      "target": [
+        {
+          "id": "00uDEMOadmin00000000",
+          "displayName": "Robin Reyes",
+          "alternateId": "robin.reyes@acme.example",
+          "type": "User"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "25cf604ac2c8ce02a53ea57c89429674",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "5b185dbd86712072d3e25b4ec38db8517b6131f9",
+      "published": "2026-03-04T09:22:11.000Z",
+      "eventType": "group.user_membership.remove",
+      "displayMessage": "group user_membership remove",
+      "severity": "INFO",
+      "actor": {
+        "id": "00uDEMOadmin00000000",
+        "displayName": "Robin Reyes",
+        "alternateId": "robin.reyes@acme.example",
+        "type": "User"
+      },
+      "target": [
+        {
+          "id": "00uDEMOsam0000000000",
+          "alternateId": "sam.iqbal@acme.example",
+          "displayName": "sam.iqbal",
+          "type": "User"
+        },
+        {
+          "id": "00gDEMOfinance000000",
+          "alternateId": "unknown",
+          "displayName": "finance-admins",
+          "type": "UserGroup"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "4b1874ad885b271c2e22bfaf52faccaf",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    }
+  ],
+  "total_fetched": 7,
+  "has_more": false,
+  "next_cursor": null,
+  "fetch_all_used": true,
+  "pagination_info": {
+    "pages_fetched": 1,
+    "stopped_early": false
+  }
+}

@@ -30,6 +30,9 @@ def main() -> int:
         print(f"fetch_logs: {text[:500]}", file=sys.stderr)
         return 1
     body = json.loads(text)
+    # reconcile.py uses this window, so a call made after the last event is still
+    # judged (a change Okta never recorded is exactly what we want to catch).
+    body["window"] = {"since": a.since, "until": until}
     out.parent.mkdir(mode=0o700, exist_ok=True)
     out.write_text(json.dumps(body, indent=2))
     out.chmod(0o600)
