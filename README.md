@@ -54,6 +54,22 @@ used somewhere else, or the log was altered. The second is a change the gateway 
 that Okta has no event for. `scripts/make_fixtures.py` regenerates both scenarios; all names, IDs and
 addresses in them are invented.
 
+### What the two logs each know
+
+The third scenario is taken from a real run, with the names changed:
+
+```
+14:05:12  info  BLOCKED_CHANGE          update_user lee.novak -> title "Director of IT"  (403)
+14:08:30  info  CHANGE_OUTSIDE_GATEWAY  group.user_membership.add by Robin Reyes (User) on lee.novak, support-tier1
+14:09:55  ok    MATCHED                 update_user -> user.account.update_profile at 14:09:58
+```
+
+An attempt to give a user a new title is refused, because the user is outside the gateway's resource
+set. An admin then adds that user to a scoped group in the console, and four minutes later the same
+change goes through. Neither log tells the whole story: Okta has no record of the refusal, and the
+gateway has no record of the admin's group change. Read together they show a privilege change that
+was blocked, the scope change that unblocked it, and who made each one.
+
 ## Sample reconciliation
 
 From a live org. The two console changes were made by an admin, and the two matched changes were made
@@ -207,7 +223,7 @@ run `setup.sh`, then deactivate the old key in Okta.
 | `scripts/smoke.py`, `gateway_client.py` | End-to-end check and the small MCP client both use |
 | `scripts/new-key.py` | Key generation and rotation |
 | `scripts/make_fixtures.py`, `fixtures/` | The demo scenarios above |
-| `tests/` | 28 tests over the interceptor, the hash chain and reconciliation |
+| `tests/` | 29 tests over the interceptor, the hash chain and reconciliation |
 
 `logs/` and `out/` are git-ignored. Audit records contain tool arguments, and System Log exports
 contain names, emails and IP addresses.
@@ -241,8 +257,9 @@ The Evidence job bundles each result with SHA-256 hashes and signs the bundle on
 - **A resource set scoped by group membership can't onboard anyone.** Users outside the set are
   invisible, so the app cannot add a new person to its groups. For joiner/mover/leaver work, scope
   users and groups separately.
-- Matching is verified for group membership changes. The other write tools map to Okta's documented
-  event types but haven't been exercised yet.
+- Matching is verified for group membership changes and profile updates
+  (`user.account.update_profile`). The other write tools map to Okta's documented event types but
+  haven't been exercised yet.
 - The audit log is local and the hash chain proves order, not origin: someone with write access to the
   file could rebuild the whole chain. Shipping records to write-once storage would close that gap.
 - Before and after records are paired in order per gateway process. Concurrent calls in one session

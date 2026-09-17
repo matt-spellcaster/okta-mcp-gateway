@@ -24,7 +24,8 @@ GATEWAY = {"id": CLIENT_ID, "displayName": "Okta MCP Gateway",
            "type": "PublicClientAppEntity"}
 
 USERS = {"dana": ("00uDEMOdana000000000", "dana.okoye@acme.example"),
-         "sam": ("00uDEMOsam0000000000", "sam.iqbal@acme.example")}
+         "sam": ("00uDEMOsam0000000000", "sam.iqbal@acme.example"),
+         "lee": ("00uDEMOlee0000000000", "lee.novak@acme.example")}
 GROUPS = {"support-tier1": "00gDEMOsupport000000", "finance-admins": "00gDEMOfinance000000"}
 
 
@@ -149,10 +150,39 @@ def incident_day() -> None:
     ], (f"{day}T00:00:00Z", f"{day}T11:10:00Z"))
 
 
+def scope_widened_day() -> None:
+    """A refused change, an admin widening scope from the console, then the same change succeeding.
+
+    The two logs cover each other's blind spots: Okta has no record of the refusal,
+    and the gateway has no record of the admin's group change.
+    """
+    day = "2026-03-06"
+    profile = {"email": USERS["lee"][1], "login": USERS["lee"][1], "firstName": "Lee",
+               "lastName": "Novak", "userType": "Employee", "title": "Director of IT"}
+    calls = [
+        # Lee is not in the gateway's resource set yet.
+        (ts(day, "14:05:12"), "update_user", {"user_id": USERS["lee"][0], "profile": profile}, denied()),
+        (ts(day, "14:09:40"), "get_user", {"user_id": USERS["lee"][0]}, ok(1370)),
+        # Same change, four minutes later, now that the admin has added Lee to a scoped group.
+        (ts(day, "14:09:55"), "update_user", {"user_id": USERS["lee"][0], "profile": profile}, ok(1377)),
+    ]
+    write_audit(FIXTURES / "scope-widened-audit.jsonl", calls)
+    write_log(FIXTURES / "scope-widened-system-log.json", [
+        token_grant(ts(day, "14:05:11")),
+        # The admin brings Lee into scope from the console; the gateway never sees this.
+        event("group.user_membership.add", ts(day, "14:08:30"), ADMIN,
+              [user_target("lee"), group_target("support-tier1")]),
+        token_grant(ts(day, "14:09:39")),
+        token_grant(ts(day, "14:09:54")),
+        event("user.account.update_profile", ts(day, "14:09:58", 400), GATEWAY, [user_target("lee")]),
+    ], (f"{day}T14:00:00Z", f"{day}T14:15:00Z"))
+
+
 def main() -> None:
     FIXTURES.mkdir(exist_ok=True)
     clean_day()
     incident_day()
+    scope_widened_day()
     for f in sorted(FIXTURES.iterdir()):
         print(f"wrote {f.relative_to(ROOT)}")
 
