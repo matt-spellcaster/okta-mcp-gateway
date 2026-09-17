@@ -5,7 +5,7 @@ Runs Okta's [okta-mcp-server](https://github.com/okta/okta-mcp-server) behind th
 like any other governed service account. Every tool call is written to a tamper-evident audit log,
 and a reconciliation script checks that log against Okta's System Log.
 
-- The server runs in a pinned, non-root container with its own Okta app, key and scopes.
+- The server runs in a pinned, non-root container with its own Okta app, key, scopes and resource set.
 - Network egress is limited to one Okta org. Nothing else is reachable, and this was tested.
 - A gateway interceptor logs each call's tool, arguments and result. If it can't log a call, the call doesn't run.
 - `reconcile.py` matches audited changes to Okta events. It flags Okta changes made with the gateway's
@@ -54,6 +54,34 @@ Tested failure cases:
 | `UNAUDITED_GATEWAY_CHANGE` | high | Okta change by the gateway app with no audit record |
 | `AUDIT_CHAIN_BROKEN` | high | Audit records edited, removed or reordered |
 | `CHANGE_OUTSIDE_GATEWAY` | info | Change by another actor, listed so a reviewer can account for it |
+| `BLOCKED_CHANGE` | info | Change the gateway attempted and Okta refused |
+
+## Scoping: what the app can reach
+
+The gateway app's custom admin role is bound to a resource set covering only the `ar-test-*` groups
+and their members. Okta then enforces the boundary itself, whatever the model is asked to do and
+whatever a reviewer approves by mistake:
+
+| Call | Result |
+|---|---|
+| `list_groups` | Only the two in-scope groups, out of five in the org |
+| `list_users` | Only members of those groups |
+| `get_user` on a user outside the set | 403 E0000006 |
+| `add_user_to_group` into an in-scope group | Allowed |
+| `add_user_to_group` into a group outside the set | 403 E0000006 |
+
+This turns a detective control into a preventive one, and it narrows reads too: the integration
+cannot enumerate the rest of the directory.
+
+**Okta records nothing for a refused change.** Its System Log shows the token grant and then no event
+at all, so the gateway's audit log is the only place the attempt exists. That is the argument for
+this design in one line: Okta tells you what happened, and the gateway tells you what was tried.
+
+```
+17:53:40  ok    MATCHED         add_user_to_group (audit#57) -> group.user_membership.add at 17:53:44
+17:53:45  info  BLOCKED_CHANGE  add_user_to_group {"group_id": "<out-of-scope>", ...} (audit#59) refused: Okta HTTP 403 E0000006
+17:54:00  ok    MATCHED         remove_user_from_group (audit#61) -> group.user_membership.remove at 17:54:03
+```
 
 ## Controls
 
@@ -62,6 +90,7 @@ Tested failure cases:
 | Dedicated Okta app and key for the gateway path | Shared credentials blur accountability | CC6.1 | A.5.16 |
 | Private Key JWT; key only in the OS keychain, never on disk | Leaked client secret | CC6.1 | A.5.17 |
 | Seven explicit scopes, custom admin role, network zone | Over-privileged assistant | CC6.3 | A.8.2 |
+| Resource set limiting which groups and users the app can touch | A change to the wrong object, whether from prompt injection or mistaken approval | CC6.3 | A.5.15 |
 | `--block-network` with a single allowed host | Exfiltration or pivoting from the server | CC6.6 | A.8.20 |
 | Image pinned by digest, dependencies by hash, non-root user | Malicious or breaking upstream change | CC8.1 | A.8.19 |
 | Fixed server set (no dynamic tool loading) | The model adding servers during a session | CC6.8 | A.8.9 |
@@ -142,6 +171,9 @@ contain names, emails and IP addresses.
 
 - **Okta doesn't log reads**, so reconciliation covers changes and token grants only. A read made with
   the gateway's key from somewhere else would not be detected this way.
+- **A resource set scoped by group membership can't onboard anyone.** Users outside the set are
+  invisible, so the app cannot add a new person to its groups. For joiner/mover/leaver work, scope
+  users and groups separately.
 - Matching is verified for group membership changes. The other write tools map to Okta's documented
   event types but haven't been exercised yet.
 - The audit log is local and the hash chain proves order, not origin: someone with write access to the

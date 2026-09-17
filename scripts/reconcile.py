@@ -16,6 +16,9 @@ that file. Findings:
   CHANGE_OUTSIDE_GATEWAY    info    A change by another actor (an admin in the
                                     console, another integration). Expected, but
                                     listed so a reviewer can account for it.
+  BLOCKED_CHANGE            info    An audited change that Okta refused (for example a
+                                    resource set that doesn't cover the target). Okta records
+                                    no event for these, so the audit log is the only record.
   MATCHED                   ok      Audited write call with its Okta event.
 
 Exit status: 1 if any high or medium finding, else 0.
@@ -97,9 +100,14 @@ def reconcile(events, calls, client_id):
     writes = [c for c in calls if c["tool"] in WRITE_TOOLS]
 
     for call in writes:
-        ok = call["result"] is not None and not call["result"].get("is_error")
-        if not ok:
-            continue  # failed calls aren't expected to change anything
+        result = call["result"] or {}
+        if result.get("is_error"):
+            # Okta logs nothing for a refused change, so report it from the audit log alone.
+            findings.append(("BLOCKED_CHANGE", "info", call["ts"],
+                             f"{call['tool']} {json.dumps(call['arguments'])} ({call['ref']}) refused: {result.get('error', 'error')[:120]}"))
+            continue
+        if call["result"] is None:
+            continue  # no result recorded (gateway stopped mid-call)
         etype, id_args = WRITE_TOOLS[call["tool"]]
         want_ids = {call["arguments"].get(a) for a in id_args}
         match = next((
