@@ -1,0 +1,4 @@
+{"ts":"2026-03-05T11:02:10.000Z","phase":"before","gateway_pid":4242,"tool":"list_groups","arguments":{},"prev_sha256":null,"seq":1}
+{"ts":"2026-03-05T11:02:13.000Z","phase":"after","gateway_pid":4242,"result":{"is_error":false,"content_items":1,"text_chars":3154},"prev_sha256":"ca0737f54df4c0a0e71908998a6527acb7a32ac6f86c840628c2e724f57e0986","seq":2}
+{"ts":"2026-03-05T11:03:00.000Z","phase":"before","gateway_pid":4242,"tool":"remove_user_from_group","arguments":{"group_id":"00gDEMOsupport000000","user_id":"00uDEMOsam0000000000"},"prev_sha256":"bfbb1bca64b89239e12501254ffb4c1a7946e28d2d21904abef9d7697e809a56","seq":3}
+{"ts":"2026-03-05T11:03:03.000Z","phase":"after","gateway_pid":4242,"result":{"is_error":false,"content_items":1,"text_chars":97},"prev_sha256":"b661bd74b863961f0378580231e6104aafc2e9db708bea35e10429a2bb8b13d0","seq":4}

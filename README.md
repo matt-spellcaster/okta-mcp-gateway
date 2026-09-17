@@ -1,5 +1,7 @@
 # okta-mcp-gateway
 
+[![Compliance](https://github.com/matt-spellcaster/okta-mcp-gateway/actions/workflows/compliance.yml/badge.svg)](https://github.com/matt-spellcaster/okta-mcp-gateway/actions/workflows/compliance.yml)
+
 Runs Okta's [okta-mcp-server](https://github.com/okta/okta-mcp-server) behind the
 [Docker MCP Gateway](https://github.com/docker/mcp-gateway), so an AI assistant's Okta access works
 like any other governed service account. Every tool call is written to a tamper-evident audit log,
@@ -26,9 +28,36 @@ Claude Code starts the gateway from `.mcp.json` when a session opens in this rep
 the server container on an internal Docker network whose only way out is a sidecar that forwards to
 the Okta org. Each `tools/call` passes through `scripts/audit.py` on the host before and after it runs.
 
+## Try it without Okta
+
+Two days of invented logs are committed, so the reconciliation can be run as is:
+
+```bash
+# A clean day: one change through the gateway, one Okta refused, one by an admin.
+scripts/reconcile.py fixtures/demo-system-log.json --audit fixtures/demo-audit.jsonl \
+  --client-id 0oaDEMOgateway0000000
+
+# A day with something wrong: exits 1.
+scripts/reconcile.py fixtures/incident-system-log.json --audit fixtures/incident-audit.jsonl \
+  --client-id 0oaDEMOgateway0000000
+```
+
+```
+Window 2026-03-05 00:00:00 to 11:10:00 UTC: 4 Okta events, 2 audited calls (1 reads), 3 gateway token grants
+
+02:47:33  high    UNAUDITED_GATEWAY_CHANGE  group.user_membership.add by Okta MCP Gateway (PublicClientAppEntity) on sam.iqbal@acme.example, finance-admins
+11:03:00  medium  MISSING_OKTA_EVENT        remove_user_from_group {"group_id": "00gDEMOsupport000000", ...} has no group.user_membership.remove event from the gateway app
+```
+
+The first is a change made with the gateway's credentials at 02:47, with no audit record: the key was
+used somewhere else, or the log was altered. The second is a change the gateway recorded as successful
+that Okta has no event for. `scripts/make_fixtures.py` regenerates both scenarios; all names, IDs and
+addresses in them are invented.
+
 ## Sample reconciliation
 
-The two console changes were made by an admin. The two matched changes were made through the gateway.
+From a live org. The two console changes were made by an admin, and the two matched changes were made
+through the gateway.
 
 ```
 Window 2026-09-17 17:21:06 to 17:26:14 UTC: 14 Okta events, 7 audited calls (5 reads), 9 gateway token grants
@@ -177,9 +206,33 @@ run `setup.sh`, then deactivate the old key in Okta.
 | `scripts/fetch_logs.py`, `reconcile.py` | System Log export and reconciliation |
 | `scripts/smoke.py`, `gateway_client.py` | End-to-end check and the small MCP client both use |
 | `scripts/new-key.py` | Key generation and rotation |
+| `scripts/make_fixtures.py`, `fixtures/` | The demo scenarios above |
+| `tests/` | 28 tests over the interceptor, the hash chain and reconciliation |
 
 `logs/` and `out/` are git-ignored. Audit records contain tool arguments, and System Log exports
 contain names, emails and IP addresses.
+
+## Development
+
+```bash
+uv run pytest -q
+uv run scripts/make_fixtures.py   # after changing the fixtures
+```
+
+Every pull request and push to `main` runs the Compliance workflow, and `main` takes changes only
+through a pull request with these checks green:
+
+| Check | SOC 2 | ISO 27001 |
+|---|---|---|
+| Tests | CC8.1 | A.8.29 |
+| Image build, in-memory keyring, non-root user | CC8.1 | A.8.19 |
+| Secret scan of the full git history (gitleaks) | CC6.1 | A.8.12 |
+| Vulnerabilities in the image's pinned requirements (pip-audit) | CC7.1 | A.8.8 |
+| Workflow security lint (zizmor) | CC8.1 | A.8.9 |
+| Branch rules on `main` | CC8.1 | A.8.32 |
+
+The Evidence job bundles each result with SHA-256 hashes and signs the bundle on `main`
+(`gh attestation verify`).
 
 ## Limitations
 

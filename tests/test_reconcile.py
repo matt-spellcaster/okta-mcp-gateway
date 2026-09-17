@@ -1,9 +1,11 @@
 """Reconciliation between the audit log and the Okta System Log."""
 
 import json
+import subprocess
+import sys
 
 import pytest
-from conftest import CLIENT_ID, GROUP_ID, USER_ID, call_request, call_result, okta_event, run_audit
+from conftest import ROOT, CLIENT_ID, GROUP_ID, USER_ID, call_request, call_result, okta_event, run_audit
 
 from reconcile import load_audit, reconcile
 
@@ -160,3 +162,25 @@ def test_same_change_by_an_admin_does_not_match_a_gateway_call(log_dir, membersh
     findings = reconcile(events, calls, CLIENT_ID)
 
     assert sorted(codes(findings)) == ["CHANGE_OUTSIDE_GATEWAY", "MISSING_OKTA_EVENT"]
+
+
+def test_window_covers_calls_after_the_last_event(tmp_path, log_dir, membership_args):
+    """A change Okta never recorded happens after the last event, and must still be judged."""
+    audited_call(log_dir, "add_user_to_group", membership_args)
+    calls = audit_calls(log_dir)
+    earlier = calls[0]["ts"].replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+    log = tmp_path / "system-log.json"
+    log.write_text(json.dumps({
+        "window": {"since": "2026-01-01T00:00:00Z", "until": "2099-01-01T00:00:00Z"},
+        "items": [okta_event("app.oauth2.token.grant.access_token", earlier, CLIENT_ID, "Okta MCP Gateway")],
+    }))
+
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "reconcile.py"), str(log),
+         "--audit", *[str(p) for p in sorted(log_dir.glob("audit-*.jsonl"))],
+         "--client-id", CLIENT_ID, "--json"],
+        text=True, capture_output=True,
+    )
+
+    assert [json.loads(line)["code"] for line in proc.stdout.splitlines()] == ["MISSING_OKTA_EVENT"]
+    assert proc.returncode == 1

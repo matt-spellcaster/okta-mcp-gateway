@@ -1,0 +1,190 @@
+{
+  "window": {
+    "since": "2026-03-05T00:00:00Z",
+    "until": "2026-03-05T11:10:00Z"
+  },
+  "items": [
+    {
+      "uuid": "51973bf9acac84140bc6902a11f4a23bff19eff7",
+      "published": "2026-03-05T02:47:30.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "e1dd2717be3d0c211e74f82cb295d22a",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "c35d139ae3f8f272af1121815897c780b2636042",
+      "published": "2026-03-05T02:47:33.000Z",
+      "eventType": "group.user_membership.add",
+      "displayMessage": "group user_membership add",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "00uDEMOsam0000000000",
+          "alternateId": "sam.iqbal@acme.example",
+          "displayName": "sam.iqbal",
+          "type": "User"
+        },
+        {
+          "id": "00gDEMOfinance000000",
+          "alternateId": "unknown",
+          "displayName": "finance-admins",
+          "type": "UserGroup"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "659f94e2e43793b326eb4a3a26a7fad1",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "1e89ce5fe9f47c4b7812ce169ae619cdae7caca3",
+      "published": "2026-03-05T11:02:09.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "1f51dd312fba193ec67a978e09690bef",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "356303ca16d363173a69b1e68b65d7b40552638b",
+      "published": "2026-03-05T11:02:59.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "a00cb8ef9d0e9f8a3e1a34b037b26192",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    }
+  ],
+  "total_fetched": 4,
+  "has_more": false,
+  "next_cursor": null,
+  "fetch_all_used": true,
+  "pagination_info": {
+    "pages_fetched": 1,
+    "stopped_early": false
+  }
+}
