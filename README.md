@@ -140,8 +140,15 @@ Needs Docker Desktop with the MCP Toolkit, `uv`, and `envsubst` (`brew install g
    scripts/smoke.py list_groups
    ```
 4. Open a Claude Code session in this folder and approve the `okta-gateway` server. Tools appear as
-   `mcp__okta-gateway__*`. `.claude/settings.json` turns off a user-level server named `okta` in this
-   folder, so the gateway is the only route to Okta.
+   `mcp__okta-gateway__*`.
+
+   If you also run okta-mcp-server directly as a user-scoped MCP server, that session has a second,
+   unaudited route to Okta. Check with "which Okta tools do you have?": every name should start with
+   `mcp__okta-gateway__`. To turn the direct server off here, use `/mcp` in a session in this folder,
+   which records the choice per project in `~/.claude.json` (`disabledMcpServers`). A project
+   `.claude/settings.json` cannot do it: `disabledMcpjsonServers` there applies only to servers
+   declared in `.mcp.json`, and `disabledMcpServers` is not a settings-file key. Better still, define
+   the direct server only in the folder where you use it, so it never loads anywhere else.
 5. Reconcile a time window:
    ```bash
    scripts/fetch_logs.py 2026-09-17T17:00:00Z
