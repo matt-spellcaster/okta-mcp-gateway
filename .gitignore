@@ -1,0 +1,8 @@
+# Real settings and any key material never get committed
+env
+*.pem
+*.key
+*.log
+logs/
+.DS_Store
+out/

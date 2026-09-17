@@ -1,0 +1,27 @@
+# Server entry for the Docker MCP Gateway (see docker/mcp-gateway docs/server-entry-spec.md).
+# scripts/setup.sh fills in ${...} from `env` and writes the result under
+# ~/.docker/mcp/catalogs/, the only place this gateway version loads it from.
+name: okta-gateway
+title: Okta (gateway)
+type: server
+description: Okta's okta-mcp-server 1.1.6 in a pinned container, with egress limited to one Okta org.
+image: okta-mcp-gateway:1.1.6
+secrets:
+  - name: okta-gateway.private_key
+    env: OKTA_PRIVATE_KEY
+    example: "PKCS#8 PEM on one line with \\n escapes (scripts/new-key.py sets this)"
+env:
+  - name: OKTA_ORG_URL
+    value: ${OKTA_ORG_URL}
+  - name: OKTA_CLIENT_ID
+    value: ${OKTA_CLIENT_ID}
+  - name: OKTA_KEY_ID
+    value: ${OKTA_KEY_ID}
+  - name: OKTA_SCOPES
+    value: ${OKTA_SCOPES}
+# Enforced only when the gateway runs with --block-network (scripts/gateway.sh does).
+# /tcp gives a transparent L4 sidecar: the hostname resolves to the sidecar, which
+# forwards only to this host:port. The default L7 mode relies on http(s)_proxy env
+# vars, which the Okta SDK's API client ignores, so every API call would fail.
+allowHosts:
+  - ${OKTA_HOST}:443/tcp

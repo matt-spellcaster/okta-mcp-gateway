@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "okta-gateway": {
+      "type": "stdio",
+      "command": "scripts/gateway.sh",
+      "args": []
+    }
+  }
+}
