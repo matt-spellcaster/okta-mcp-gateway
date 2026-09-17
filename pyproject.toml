@@ -1,0 +1,18 @@
+[project]
+name = "okta-mcp-gateway"
+version = "0.1.0"
+description = "Okta MCP server behind the Docker MCP Gateway, with an audit log and reconciliation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+# Ignore packages published after this date so a new upstream release can't
+# change what gets installed without a reviewed commit. Bump deliberately.
+exclude-newer = "2026-09-16T00:00:00Z"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

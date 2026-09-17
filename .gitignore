@@ -6,3 +6,7 @@ env
 logs/
 .DS_Store
 out/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
