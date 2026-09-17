@@ -38,9 +38,21 @@ def test_incident_day_reports_both_problems():
     assert sorted(codes(proc)) == ["MISSING_OKTA_EVENT", "UNAUDITED_GATEWAY_CHANGE"]
 
 
+def test_scope_widened_day_shows_both_logs_covering_each_other():
+    """Refused change (only the audit log has it), admin widening scope (only Okta has it), then success."""
+    proc = run_reconcile("scope-widened")
+
+    assert proc.returncode == 0
+    findings = [json.loads(line) for line in proc.stdout.splitlines()]
+    assert [f["code"] for f in findings] == ["BLOCKED_CHANGE", "CHANGE_OUTSIDE_GATEWAY", "MATCHED"]
+    assert "Director of IT" in findings[0]["detail"]
+    # The successful change is matched to the event type Okta actually emits.
+    assert "user.account.update_profile" in findings[2]["detail"]
+
+
 def test_fixture_audit_logs_verify():
     from verify_chain import verify
-    for name in ("demo-audit.jsonl", "incident-audit.jsonl"):
+    for name in ("demo-audit.jsonl", "incident-audit.jsonl", "scope-widened-audit.jsonl"):
         assert verify(FIXTURES / name) == [], name
 
 

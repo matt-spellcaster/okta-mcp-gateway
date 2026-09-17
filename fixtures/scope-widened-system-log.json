@@ -1,0 +1,229 @@
+{
+  "window": {
+    "since": "2026-03-06T14:00:00Z",
+    "until": "2026-03-06T14:15:00Z"
+  },
+  "items": [
+    {
+      "uuid": "b2981bcbb951e85d7e3eee090a3ecfdac39812d2",
+      "published": "2026-03-06T14:05:11.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "20d4c2a9003b6ad549ddb52386f0d78a",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "66d2ef7201aa0400267c2cad6940110a2e0ffd42",
+      "published": "2026-03-06T14:08:30.000Z",
+      "eventType": "group.user_membership.add",
+      "displayMessage": "group user_membership add",
+      "severity": "INFO",
+      "actor": {
+        "id": "00uDEMOadmin00000000",
+        "displayName": "Robin Reyes",
+        "alternateId": "robin.reyes@acme.example",
+        "type": "User"
+      },
+      "target": [
+        {
+          "id": "00uDEMOlee0000000000",
+          "alternateId": "lee.novak@acme.example",
+          "displayName": "lee.novak",
+          "type": "User"
+        },
+        {
+          "id": "00gDEMOsupport000000",
+          "alternateId": "unknown",
+          "displayName": "support-tier1",
+          "type": "UserGroup"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "6dfbbf90ee666d42f401f405a6985ab5",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "a4599eaa043f464ceb48f9b25766aa0469a3a073",
+      "published": "2026-03-06T14:09:39.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "0af207c1e80198e0ab86ab0d135c195a",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "f9d5b9393e5e6d9495dd8e3b6b57a000e1c3ba2a",
+      "published": "2026-03-06T14:09:54.000Z",
+      "eventType": "app.oauth2.token.grant.access_token",
+      "displayMessage": "app oauth2 token grant access_token",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "AT.demo",
+          "alternateId": "unknown",
+          "displayName": "Access Token",
+          "type": "access_token"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "2e28cdd4279268845dc8f1436b8c31a1",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    },
+    {
+      "uuid": "4a70603a3154e4b8c289fc526f6b6d789fbd54d9",
+      "published": "2026-03-06T14:09:58.400Z",
+      "eventType": "user.account.update_profile",
+      "displayMessage": "user account update_profile",
+      "severity": "INFO",
+      "actor": {
+        "id": "0oaDEMOgateway0000000",
+        "displayName": "Okta MCP Gateway",
+        "alternateId": "unknown",
+        "detailEntry": {
+          "subjectProfile": "service"
+        },
+        "type": "PublicClientAppEntity"
+      },
+      "target": [
+        {
+          "id": "00uDEMOlee0000000000",
+          "alternateId": "lee.novak@acme.example",
+          "displayName": "lee.novak",
+          "type": "User"
+        }
+      ],
+      "client": {
+        "ipAddress": "198.51.100.24",
+        "userAgent": {
+          "rawUserAgent": "OpenAPI-Generator/1.0.0/python"
+        }
+      },
+      "outcome": {
+        "result": "SUCCESS"
+      },
+      "transaction": {
+        "id": "8e30073f11118831a74f90dd27e09430",
+        "type": "WEB"
+      },
+      "debugContext": {
+        "debugData": {
+          "requestUri": "/api/v1/groups"
+        }
+      }
+    }
+  ],
+  "total_fetched": 5,
+  "has_more": false,
+  "next_cursor": null,
+  "fetch_all_used": true,
+  "pagination_info": {
+    "pages_fetched": 1,
+    "stopped_early": false
+  }
+}
