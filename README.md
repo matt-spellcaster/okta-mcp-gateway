@@ -73,6 +73,13 @@ whatever a reviewer approves by mistake:
 This turns a detective control into a preventive one, and it narrows reads too: the integration
 cannot enumerate the rest of the directory.
 
+**The assistant can't see this boundary.** Asked what access it has, it answers from its scopes and
+reports that it can read the whole org, because Okta doesn't tell a client what resource set its role
+is bound to, and the server's `get_scope_status` covers scopes only. An assistant's account of its own
+permissions is not evidence: the Okta configuration and the audit log are. It is also the argument for
+enforcing limits at the provider rather than in a prompt, since the model can be confidently wrong
+about what it is able to do.
+
 **Okta records nothing for a refused change.** Its System Log shows the token grant and then no event
 at all, so the gateway's audit log is the only place the attempt exists. That is the argument for
 this design in one line: Okta tells you what happened, and the gateway tells you what was tried.
